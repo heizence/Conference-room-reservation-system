@@ -1,0 +1,16 @@
+# meeting-room-system/docker-compose.yml (수정 후)
+
+version: '3.8'
+
+services:
+  app:
+    build: .
+    # ✨ 1. 컨테이너 이름을 새 프로젝트에 맞게 변경합니다. (예: seedn_app -> meeting_room_app)
+    container_name: meeting_room_app
+    # ✨ 2. 포트 번호를 이전 프로젝트와 다르게 변경합니다. (예: 3000:3000 -> 3001:3000)
+    #    이렇게 하면 이전 프로젝트와 새 프로젝트를 동시에 실행할 수 있습니다.
+    ports:
+      - '3001:3001'
+    # volumes:
+    #   - .:/usr/src/app
+    #   - /usr/src/app/node_modules

@@ -1,0 +1,4 @@
+# Docker가 빌드하거나 동기화할 때 이 폴더들을 무시합니다.
+node_modules
+dist
+.git
