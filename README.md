@@ -60,3 +60,54 @@ API 문서 (Swagger UI): http://localhost:3001/api
 위 주소로 접속하여 API를 테스트할 수 있습니다.
 
 데이터는 프로젝트 루트에 생성되는 db.sqlite 파일에 저장됩니다.(VS Code의 'SQLite' 확장 프로그램 등으로 열어볼 수 있습니다.)
+
+
+## 부록 - 데이터베이스 스키마
+
+### 테이블 목록
+- users
+- rooms
+- reservations
+- reservation_attendees_user
+
+
+### **users 테이블**
+사용자 정보를 저장합니다.
+
+| 컬럼명    | 데이터 타입 | 설명                            | 제약 조건      |
+| --------- | ----------- | ------------------------------- | -------------- |
+| `id`      | INTEGER     | 사용자 고유 ID                  | Primary Key    |
+| `name`    | VARCHAR     | 사용자 이름                     | Not Null       |
+| `email`   | VARCHAR     | 사용자 이메일, 로그인 시 사용 가능 | Not Null, Unique |
+| `createdAt` | DATETIME    | 사용자 정보 생성 일시           | Not Null, Default |
+
+### **rooms 테이블**
+회의실 정보를 저장합니다.
+
+| 컬럼명     | 데이터 타입 | 설명                 | 제약 조건   |
+| ---------- | ----------- | -------------------- | ----------- |
+| `id`       | INTEGER     | 회의실 고유 ID       | Primary Key |
+| `name`     | VARCHAR     | 회의실 이름          | Not Null    |
+| `floor`    | INTEGER     | 회의실 위치 (층)     | Not Null    |
+| `capacity` | INTEGER     | 최대 수용 인원       | Not Null    |
+| `location` | VARCHAR     | 상세 위치 (예: A동)  | Nullable    |
+
+### **reservations 테이블**
+예약 정보를 저장하며, `users`와 `rooms` 테이블을 연결하는 역할을 합니다.
+
+| 컬럼명      | 데이터 타입 | 설명                               | 제약 조건                 |
+| ----------- | ----------- | ---------------------------------- | ------------------------- |
+| `id`        | INTEGER     | 예약 고유 ID                       | Primary Key               |
+| `startTime` | DATETIME    | 예약 시작 시간                     | Not Null                  |
+| `endTime`   | DATETIME    | 예약 종료 시간                     | Not Null                  |
+| `createdAt` | DATETIME    | 예약 정보 생성 일시                | Not Null, Default         |
+| `reserverId`| INTEGER     | 예약을 생성한 사용자 ID (FK)       | Foreign Key to users.id   |
+| `roomId`    | INTEGER     | 예약된 회의실 ID (FK)              | Foreign Key to rooms.id |
+
+### **reservation_attendees_user 테이블**
+하나의 예약에 여러 사용자가 참석하는 다대다 관계를 표현하는 Junction Table입니다.
+
+| 컬럼명         | 데이터 타입 | 설명                      | 제약 조건                       |
+| --------------- | ----------- | ------------------------- | ------------------------------- |
+| `reservationId` | INTEGER     | 예약 ID (FK)              | Primary Key, Foreign Key to reservations.id |
+| `userId`        | INTEGER     | 참석하는 사용자 고유 ID
