@@ -9,14 +9,17 @@
 ## 2. 주요 기능
 
 ### 🏢 회의실 관리 (`/rooms`)
+
 - 회의실의 생성, 전체/개별 조회, 수정, 삭제 (CRUD) 기능을 제공합니다.
 - 각 회의실은 이름, 층, 최대 수용 인원 등의 속성을 가집니다.
 
 ### 👤 사용자 관리 (`/users`)
+
 - 사용자의 생성, 전체/개별 조회, 수정, 삭제 (CRUD) 기능을 제공합니다.
 - 각 사용자는 이름, 이메일 등의 속성을 가집니다.
 
 ### ✅ 예약 관리 (`/reservations`)
+
 - **예약 생성**: 특정 사용자가 특정 회의실을 지정된 시간(`startTime`, `endTime`)에 예약합니다.
 - **유효성 검증**:
   - 예약의 종료 시간은 시작 시간보다 이후여야 합니다.
@@ -35,16 +38,19 @@
 ## 4. 시작하기
 
 ### 사전 요구사항
+
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)이 설치되어 있어야 합니다.
 
 ### 설치
 
 #### 1. 저장소를 로컬 컴퓨터에 복제(clone)
+
 ```bash
 git clone <your-repository-url>
 ```
 
 #### 2. 프로젝트 폴더로 이동
+
 ```bash
 cd <project-directory>
 ```
@@ -67,57 +73,60 @@ docker-compose up --build -d
 
 http://localhost:{PORT} 로 접속하여 "Hello, world" 메시지가 잘 출력되는지 확인합니다.
 
-API 문서 (Swagger UI): http://localhost:{PORT}/api
+API 문서 (Swagger UI): http://localhost:{PORT}/apidoc
 
 데이터는 프로젝트 루트에 생성되는 db.sqlite 파일에 저장됩니다.(VS Code의 'SQLite' 확장 프로그램 등으로 열어볼 수 있습니다.)
-
 
 ## 부록 - 데이터베이스 Schema
 
 ### 테이블 목록
+
 - users
 - rooms
 - reservations
 - reservation_attendees_user
 
-
 ### **users 테이블**
+
 사용자 정보를 저장합니다.
 
-| 컬럼명    | 데이터 타입 | 설명                            | 제약 조건      |
-| --------- | ----------- | ------------------------------- | -------------- |
-| `id`      | INTEGER     | 사용자 고유 ID                  | Primary Key    |
-| `name`    | VARCHAR     | 사용자 이름                     | Not Null       |
-| `email`   | VARCHAR     | 사용자 이메일, 로그인 시 사용 가능 | Not Null, Unique |
-| `createdAt` | DATETIME    | 사용자 정보 생성 일시           | Not Null, Default |
+| 컬럼명      | 데이터 타입 | 설명                               | 제약 조건         |
+| ----------- | ----------- | ---------------------------------- | ----------------- |
+| `id`        | INTEGER     | 사용자 고유 ID                     | Primary Key       |
+| `name`      | VARCHAR     | 사용자 이름                        | Not Null          |
+| `email`     | VARCHAR     | 사용자 이메일, 로그인 시 사용 가능 | Not Null, Unique  |
+| `createdAt` | DATETIME    | 사용자 정보 생성 일시              | Not Null, Default |
 
 ### **rooms 테이블**
+
 회의실 정보를 저장합니다.
 
-| 컬럼명     | 데이터 타입 | 설명                 | 제약 조건   |
-| ---------- | ----------- | -------------------- | ----------- |
-| `id`       | INTEGER     | 회의실 고유 ID       | Primary Key |
-| `name`     | VARCHAR     | 회의실 이름          | Not Null    |
-| `floor`    | INTEGER     | 회의실 위치 (층)     | Not Null    |
-| `capacity` | INTEGER     | 최대 수용 인원       | Not Null    |
-| `location` | VARCHAR     | 상세 위치 (예: A동)  | Nullable    |
+| 컬럼명     | 데이터 타입 | 설명                | 제약 조건   |
+| ---------- | ----------- | ------------------- | ----------- |
+| `id`       | INTEGER     | 회의실 고유 ID      | Primary Key |
+| `name`     | VARCHAR     | 회의실 이름         | Not Null    |
+| `floor`    | INTEGER     | 회의실 위치 (층)    | Not Null    |
+| `capacity` | INTEGER     | 최대 수용 인원      | Not Null    |
+| `location` | VARCHAR     | 상세 위치 (예: A동) | Nullable    |
 
 ### **reservations 테이블**
+
 예약 정보를 저장하며, `users`와 `rooms` 테이블을 연결하는 역할을 합니다.
 
-| 컬럼명      | 데이터 타입 | 설명                               | 제약 조건                 |
-| ----------- | ----------- | ---------------------------------- | ------------------------- |
-| `id`        | INTEGER     | 예약 고유 ID                       | Primary Key               |
-| `startTime` | DATETIME    | 예약 시작 시간                     | Not Null                  |
-| `endTime`   | DATETIME    | 예약 종료 시간                     | Not Null                  |
-| `createdAt` | DATETIME    | 예약 정보 생성 일시                | Not Null, Default         |
-| `reserverId`| INTEGER     | 예약을 생성한 사용자 ID (FK)       | Foreign Key to users.id   |
-| `roomId`    | INTEGER     | 예약된 회의실 ID (FK)              | Foreign Key to rooms.id |
+| 컬럼명       | 데이터 타입 | 설명                         | 제약 조건               |
+| ------------ | ----------- | ---------------------------- | ----------------------- |
+| `id`         | INTEGER     | 예약 고유 ID                 | Primary Key             |
+| `startTime`  | DATETIME    | 예약 시작 시간               | Not Null                |
+| `endTime`    | DATETIME    | 예약 종료 시간               | Not Null                |
+| `createdAt`  | DATETIME    | 예약 정보 생성 일시          | Not Null, Default       |
+| `reserverId` | INTEGER     | 예약을 생성한 사용자 ID (FK) | Foreign Key to users.id |
+| `roomId`     | INTEGER     | 예약된 회의실 ID (FK)        | Foreign Key to rooms.id |
 
 ### **reservation_attendees_user 테이블**
+
 하나의 예약에 여러 사용자가 참석하는 다대다 관계를 표현하는 Junction Table입니다.
 
-| 컬럼명         | 데이터 타입 | 설명                      | 제약 조건                       |
-| --------------- | ----------- | ------------------------- | ------------------------------- |
-| `reservationId` | INTEGER     | 예약 ID (FK)              | Primary Key, Foreign Key to reservations.id |
-| `userId`        | INTEGER     | 참석하는 사용자 고유 ID
+| 컬럼명          | 데이터 타입 | 설명                    | 제약 조건                                   |
+| --------------- | ----------- | ----------------------- | ------------------------------------------- |
+| `reservationId` | INTEGER     | 예약 ID (FK)            | Primary Key, Foreign Key to reservations.id |
+| `userId`        | INTEGER     | 참석하는 사용자 고유 ID |
