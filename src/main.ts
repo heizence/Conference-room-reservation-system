@@ -29,6 +29,7 @@ async function bootstrap() {
   // '/api' 경로에 Swagger UI를 설정
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3001);
+  const PORT = Number(process.env.PORT!);
+  await app.listen(PORT);
 }
 bootstrap();
