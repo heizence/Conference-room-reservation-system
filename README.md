@@ -4,7 +4,7 @@
 
 이 프로젝트는 NestJS, TypeORM, SQLite를 사용하여 구현한 회의실 예약 시스템의 백엔드 서버입니다. 사용자와 회의실 정보를 관리하고, 지정된 시간에 회의실을 예약하는 기능을 제공합니다.
 
-관계형 데이터베이스의 특성을 활용하여 예약 시간 중복 방지, 사용자 권한 검증 등 실제 서비스에서 마주할 수 있는 복합적인 비즈니스 로직을 구현하는 것을 목표로 합니다.
+관계형 데이터베이스의 특성을 활용하여 예약 시간 중복 방지, 사용자 권한 검증 등 실제 서비스에서 마주할 수 있는 복합적인 비즈니스 로직을 구현하였습니다.
 
 ## 2. 주요 기능
 
@@ -71,9 +71,9 @@ docker-compose up --build -d
 
 #### 5. 서버 확인
 
-http://localhost:{PORT} 로 접속하여 "Hello, world" 메시지가 잘 출력되는지 확인합니다.
+http://localhost:PORT 로 접속하여 "Hello, world" 메시지가 잘 출력되는지 확인합니다.
 
-API 문서 (Swagger UI): http://localhost:{PORT}/apidoc
+API 문서 (Swagger UI): http://localhost:PORT/apidoc
 
 데이터는 프로젝트 루트에 생성되는 db.sqlite 파일에 저장됩니다.(VS Code의 'SQLite' 확장 프로그램 등으로 열어볼 수 있습니다.)
 
